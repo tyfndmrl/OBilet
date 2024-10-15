@@ -10,7 +10,9 @@
         </div>
         <div class="from-content d-flex flex-column w-100">
             <label class="label-title">Nereden</label>
-            <select class="selectpicker btn-lg origin" required name="OriginId" id="origin" title="Kalkış Yeri" data-live-search="true" data-live-search-placeholder="Kalkış Yeri">
+            <select class="btn-lg origin" required name="OriginId" id="origin" title="Kalkış Yeri" data-tags="true" data-placeholder="Kalkış Yeri" data-allow-clear="true">
+
+                <option></option>
                 @foreach (var item in Model)
                 {
                     <option value=@item.Id>@item.Name</option>
@@ -27,7 +29,8 @@
         </div>
         <div class="from-content d-flex flex-column w-100">
             <label class="label-title">Nereye</label>
-            <select class="selectpicker btn-lg destination" required name="DestinationId" id="destination" title="Varış Yeri">
+            <select class="btn-lg destination" required name="DestinationId" id="destination" title="Varış Yeri" data-tags="true" data-placeholder="Varış Yeri" data-allow-clear="true">
+                <option></option>
                 @foreach (var item in Model)
                 {
                     <option value=@item.Id>@item.Name</option>
@@ -41,11 +44,11 @@
         </div>
         <div class="from-content d-flex flex-column w-100">
             <label class="label-title">Tarih</label>
-            <input type="date" name="Date" placeholder="Rezervasyon Tarihi" required value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" id="reservationDate">
+            <input type="text" name="Date" placeholder="Rezervasyon Tarihi" required value="@DateTime.Now.AddDays(1).ToString("dd.MM.yyyy")" class="form-control" id="reservationDate">
         </div>
         <div class="from-date">
-            <button class="select lh-1" id="today">Bugün</button>
-            <button class="lh-1" id="tomorrow">Yarın</button>
+            <button class="lh-1" id="today">Bugün</button>
+            <button class="lh-1 select" id="tomorrow">Yarın</button>
         </div>
     </div>
     <div class="search-group d-flex justify-content-center">
@@ -54,5 +57,129 @@
 </div>
 
 @section Scripts {
-    
+    <script>
+        $(document).ready(function () {
+            $('#origin').select2();
+            $('#destination').select2();
+
+
+
+            $('#reservationDate').datepicker({
+                clearBtn: false,
+                format: "dd.mm.yyyy",
+                startDate: new Date(),
+            });
+
+            $('#reservationDate').on('change', function () {
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, '0');
+                var dd1 = String(today.getDate() + 1).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                var yyyy = today.getFullYear();
+
+                today = dd + '.' + mm + '.' + yyyy;
+                var tomorrow = dd1 + '.' + mm + '.' + yyyy;
+                if ($('#reservationDate').val() == today) {
+                    $('#today').addClass('select');
+                    $('#tomorrow').removeClass('select');
+                } else if ($('#reservationDate').val() == tomorrow) {
+                    $('#tomorrow').addClass('select');
+                    $('#today').removeClass('select');
+                } else {
+                    $('#tomorrow').removeClass('select');
+                    $('#today').removeClass('select');
+                }
+            });
+
+            $('#today').click(function () {
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                var yyyy = today.getFullYear();
+
+                today = dd + '.' + mm + '.' + yyyy;
+                $('#reservationDate').val(today);
+
+                //this remove class select
+                $('#tomorrow').removeClass('select');
+                $('#today').addClass('select');
+            });
+
+            $('#tomorrow').click(function () {
+                var today = new Date();
+                var tomorrow = new Date(today);
+                tomorrow.setDate(tomorrow.getDate() + 1);
+
+                var dd = String(tomorrow.getDate()).padStart(2, '0');
+                var mm = String(tomorrow.getMonth() + 1).padStart(2, '0'); //January is 0!
+                var yyyy = tomorrow.getFullYear();
+
+                tomorrow = dd + '.' + mm + '.' + yyyy;
+                $('#reservationDate').val(tomorrow);
+
+                //this remove class select
+                $('#today').removeClass('select');
+                $('#tomorrow').addClass('select');
+            });
+
+            $('.dest .arrow').on('click', function () {
+                var originValue = $('#origin').val();
+                var destinationValue = $('#destination').val();
+
+                $('#origin').val(destinationValue);
+                $('#destination').val(originValue);
+
+                $('#origin').trigger('change.select2');
+                $('#destination').trigger('change.select2');
+            });
+
+            $('.search').on('click', function () {
+                var originId = $('#origin').val();
+                var destinationId = $('#destination').val();
+                var date = $('#reservationDate').val();
+                var dateArray = date.split('.');
+                date = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
+
+
+                if (!originId || !destinationId || originId == destinationId) {
+                    alert('Lütfen geçerli bir kalkış ve varış yeri seçiniz.');
+                    return;
+                }
+
+                document.cookie = "originId=" + originId + "; path=/";
+                document.cookie = "destinationId=" + destinationId + "; path=/";
+                document.cookie = "date=" + date + "; path=/";
+
+                if (originId && destinationId && date) {
+                    window.location.href = '/' + originId + '-' + destinationId + '/' + date;
+                }
+            });
+
+            //originId, destinationId and date document read a cookie to fields
+            var originId = getCookie('originId');
+            var destinationId = getCookie('destinationId');
+            var date = getCookie('date');
+            $('#origin').val(originId).trigger('change.select2');
+            $('#destination').val(destinationId).trigger('change.select2');
+            $('#reservationDate').val(date).trigger('change');
+
+            function getCookie(cname) {
+                let name = cname + "=";
+                let decodedCookie = decodeURIComponent(document.cookie);
+                let ca = decodedCookie.split(';');
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+
+        });
+
+    </script>
 }

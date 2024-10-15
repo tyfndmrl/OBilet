@@ -51,6 +51,7 @@ header {
         top: -17px;
         right: 10px;
         position: absolute;
+        cursor: pointer;
     }
 
 .date-group {

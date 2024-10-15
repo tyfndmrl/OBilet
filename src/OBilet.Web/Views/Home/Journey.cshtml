@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<OBilet.Application.Features.BusJourney.Queries.BusJourneyDto>;
+@{
     ViewData["Title"] = "Privacy Policy";
 }
 <div class="header">
@@ -10,56 +11,41 @@
         </svg>
     </button>
     <div class="title">
-        <h1>İstanbul Avrupa - Ankara</h1>
-        <p>25 Ekim Perşembe</p>
     </div>
 </div>
 
 <div class="ticket-list">
-    <div class="ticket">
-        <div class="ticket-info">
-            <div class="time">
-                <p>Kalkış</p>
-                <h2>09:30</h2>
+    @foreach (var item in Model)
+    {
+        <div class="ticket">
+            <div class="ticket-info">
+                <div class="time">
+                    <p>Kalkış</p>
+                    <h2>@item.DepartureTime.ToString("HH:mm")</h2>
+                </div>
+                <div class="arrow">→</div>
+                <div class="time">
+                    <p>Varış</p>
+                    <h2>@item.ArrivalTime.ToString("HH:mm")</h2>
+                </div>
+                <div class="fill"></div>
+                <div class="price">
+                    <p>@item.Price.ToString("N2") TL</p>
+                </div>
             </div>
-            <div class="arrow">→</div>
-            <div class="time">
-                <p>Varış</p>
-                <h2>15:30</h2>
-            </div>
-            <div class="fill"></div>
-            <div class="price">
-                <p>75,00 TL</p>
+
+            <div class="location">
+                <p>@item.Origin - @item.Destination</p>
             </div>
         </div>
-
-        <div class="location">
-            <p>Esenler Otogarı - Ankara Aşti Otogarı</p>
-        </div>
-    </div>
-
-    <!-- Repeat for each ticket -->
-    <div class="ticket">
-        <div class="ticket-info">
-            <div class="time">
-                <p>Kalkış</p>
-                <h2>09:30</h2>
-            </div>
-            <div class="arrow">→</div>
-            <div class="time">
-                <p>Varış</p>
-                <h2>15:30</h2>
-            </div>
-            <div class="fill"></div>
-            <div class="price">
-                <p>75,00 TL</p>
-            </div>
-        </div>
-
-        <div class="location">
-            <p>Esenler Otogarı - Ankara Aşti Otogarı</p>
-        </div>
-    </div>
-
-    <!-- You can repeat more tickets here -->
+    }
 </div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".back-button").click(function () {
+                window.history.back();
+            });
+        });
+    </script>
+}

@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using OBilet.Application.Features.BusJourney.Queries;
 using OBilet.Application.Features.BusLocation.Queries;
 using OBilet.Web.Models;
 using System.Diagnostics;
@@ -21,11 +22,13 @@ namespace OBilet.Web.Controllers
         {
             var result = await _mediator.Send(query);
             return View(result.Value);
-        }        
-        
-        public IActionResult Journey()
+        }
+
+        [HttpGet("{OriginId}-{DestinationId}/{DepartureDate}")]
+        public async Task<IActionResult> Journey(BusJourneyQuery query)
         {
-            return View();
+            var result = await _mediator.Send(query);
+            return View(result.Value);
         }
 
         public IActionResult Privacy()
