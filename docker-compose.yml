@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  obilet.api:
+    image: ${DOCKER_REGISTRY-}obiletapi
+    build:
+      context: .
+      dockerfile: src/OBilet.API/Dockerfile
+    ports:
+      - 8080:8080
+    networks:
+      - prod
+
+  obilet.web:
+    image: ${DOCKER_REGISTRY-}obiletweb
+    build:
+      context: .
+      dockerfile: src/OBilet.Web/Dockerfile
+    ports:
+      - 8081:8080
+    networks:
+      - prod
+
+networks:
+  prod:

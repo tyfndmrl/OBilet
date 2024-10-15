@@ -1,0 +1,58 @@
+﻿@model List<OBilet.Application.Features.BusLocation.Queries.BusLocationDto>;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row m-0">
+    <div class="col-12 col-sm-12 mt-4 form-control d-flex flex-row">
+        <div class="icon">
+            <img src="asset/ls.svg" width="15" />
+        </div>
+        <div class="from-content d-flex flex-column w-100">
+            <label class="label-title">Nereden</label>
+            <select class="selectpicker btn-lg origin" required name="OriginId" id="origin" title="Kalkış Yeri" data-live-search="true" data-live-search-placeholder="Kalkış Yeri">
+                @foreach (var item in Model)
+                {
+                    <option value=@item.Id>@item.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="col-12 col-sm-12 mt-1 form-control d-flex flex-row dest">
+        <div class="arrow">
+            <img src="asset/arrow.svg" />
+        </div>
+        <div class="icon">
+            <img src="asset/le.svg" width="15" />
+        </div>
+        <div class="from-content d-flex flex-column w-100">
+            <label class="label-title">Nereye</label>
+            <select class="selectpicker btn-lg destination" required name="DestinationId" id="destination" title="Varış Yeri">
+                @foreach (var item in Model)
+                {
+                    <option value=@item.Id>@item.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="col-12 col-sm-12 mt-6 form-control date-group d-flex flex-row">
+        <div class="icon">
+            <img src="asset/ui-calendar.svg" width="15" />
+        </div>
+        <div class="from-content d-flex flex-column w-100">
+            <label class="label-title">Tarih</label>
+            <input type="date" name="Date" placeholder="Rezervasyon Tarihi" required value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" id="reservationDate">
+        </div>
+        <div class="from-date">
+            <button class="select lh-1" id="today">Bugün</button>
+            <button class="lh-1" id="tomorrow">Yarın</button>
+        </div>
+    </div>
+    <div class="search-group d-flex justify-content-center">
+        <button class="search">Bileti Bul</button>
+    </div>
+</div>
+
+@section Scripts {
+    
+}

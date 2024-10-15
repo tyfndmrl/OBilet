@@ -1,0 +1,149 @@
+{
+	"info": {
+		"_postman_id": "d2034a26-9ccb-4903-9452-2ff47611cb8d",
+		"name": "obilet.com programming assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetSession",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic JEcYcEMyantZV095WVc3G2JtVjNZbWx1"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"type\":1,\n    \"connection\":{\n        \"ip-address\":\"165.114.41.21\", \"port\":\"5117\"\n    },\n    \"browser\":{\n        \"name\":\"Chrome\", \"version\":\"47.0.0.12\"\n    }\n}"
+				},
+				"url": {
+					"raw": "https://v2-api.obilet.com/api/client/getsession",
+					"protocol": "https",
+					"host": [
+						"v2-api",
+						"obilet",
+						"com"
+					],
+					"path": [
+						"api",
+						"client",
+						"getsession"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBusLocations(all)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic JEcYcEMyantZV095WVc3G2JtVjNZbWx1"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\":null,\n    \"device-session\":{\n        \"session-id\": \"PqtdftjloK3Kpka97+ILDzMa6D9740nggLiTzXiLlzA=\",\n        \"device-id\": \"PqtdftjloK3Kpka97+ILDzMa6D9740nggLiTzXiLlzA=\"\n  },\n    \"date\":\"2016-03-11T11:33:00\",\n    \"language\":\"tr-TR\"\n}"
+				},
+				"url": {
+					"raw": "https://v2-api.obilet.com/api/location/getbuslocations",
+					"protocol": "https",
+					"host": [
+						"v2-api",
+						"obilet",
+						"com"
+					],
+					"path": [
+						"api",
+						"location",
+						"getbuslocations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBusLocations(search)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic JEcYcEMyantZV095WVc3G2JtVjNZbWx1"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\":\"amkrara\",\n    \"device-session\":{\n        \"session-id\": \"PqtdftjloK3Kpka97+ILDzMa6D9740nggLiTzXiLlzA=\",\n        \"device-id\": \"PqtdftjloK3Kpka97+ILDzMa6D9740nggLiTzXiLlzA=\"\n  },\n    \"date\":\"2016-03-11T11:33:00\",\n    \"language\":\"tr-TR\"\n}"
+				},
+				"url": {
+					"raw": "https://v2-api.obilet.com/api/location/getbuslocations",
+					"protocol": "https",
+					"host": [
+						"v2-api",
+						"obilet",
+						"com"
+					],
+					"path": [
+						"api",
+						"location",
+						"getbuslocations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetJourneys",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic JEcYcEMyantZV095WVc3G2JtVjNZbWx1"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"device-session\": {\n        \"session-id\": \"PqtdftjloK3Kpka97+ILDzMa6D9740nggLiTzXiLlzA=\",\n        \"device-id\": \"PqtdftjloK3Kpka97+ILDzMa6D9740nggLiTzXiLlzA=\"\n  },\n  \"date\": \"2021-09-01\",\n  \"language\": \"tr-TR\",\n  \"data\": {\n    \"origin-id\": 349,\n    \"destination-id\": 356,\n    \"departure-date\": \"2021-09-01\"\n  }\n}"
+				},
+				"url": {
+					"raw": "https://v2-api.obilet.com/api/journey/getbusjourneys",
+					"protocol": "https",
+					"host": [
+						"v2-api",
+						"obilet",
+						"com"
+					],
+					"path": [
+						"api",
+						"journey",
+						"getbusjourneys"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
